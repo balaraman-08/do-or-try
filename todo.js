@@ -71,7 +71,7 @@ todo.put('/edit', (req, res) => {
 todo.delete('/delete', (req, res) => {
   var {username, title} = req.body;
   console.log(username + " " + title);
-  pool.query('delete from list where username=($1) and title=($2)', [username, title], (err, result) => {
+  pool.query('delete from list where username=$1 and title=$2', [username, title], (err, result) => {
     if (err){
       res.send("Select " + err.toString())
     }
