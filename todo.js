@@ -34,7 +34,7 @@ todo.post("/list", (req, res) => {
 todo.post("/add", (req, res) => {
   var { email, title, desc } = req.body;
   pool.query(
-    "insert into list (email,title,description,upvote,downvote) values($1,$2,$3,$4,$5,$6)",
+    "insert into list (email,title,description,upvote,downvote) values($1,$2,$3,$4,$5)",
     [email, title, desc, 0, 0],
     (err, result) => {
       if (err) {
