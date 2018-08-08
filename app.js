@@ -13,6 +13,8 @@ var config = {
   password: "ddb6afe9f49508b09c3e54ab8b48d553445cc13be65d6c4c5ea0b83ad29ce5d4"
 };
 
+var count = 0;
+
 var pool = new Pool(config);
 
 app.use(bodyParser.json());
@@ -24,33 +26,47 @@ app.get("/", (req, res) => {
   res.send(":)");
 });
 
+app.get("/dl", (req, res) => {
+  var file = __dirname + "/app/do_or_try.apk";
+  count++;
+  res.download(file);
+});
+
+app.get("/dl/count", (req, res) => {
+  console.log(count);
+});
+
 app.post("/login", (req, res) => {
   var { email, password } = req.body;
-  pool.query('select * from "user" where email=($1)', [email], (err, result) => {
-    if (err) {
-      res.send(err.toString());
-    } else {
-      if (result.rows.length != 0) {
-        if (password == result.rows[0].password) {
-          res.send("success");
-        } else {
-          res.send("password wrong");
-        }
+  pool.query(
+    'select * from "user" where email=($1)',
+    [email],
+    (err, result) => {
+      if (err) {
+        res.send(err.toString());
       } else {
-        pool.query(
-          'insert into "user" values ($1, $2)',
-          [email, password],
-          (err, result) => {
-            if (err) {
-              res.send("Register error");
-            } else {
-              res.send("User created");
-            }
+        if (result.rows.length != 0) {
+          if (password == result.rows[0].password) {
+            res.send("success");
+          } else {
+            res.send("password wrong");
           }
-        );
+        } else {
+          pool.query(
+            'insert into "user" values ($1, $2)',
+            [email, password],
+            (err, result) => {
+              if (err) {
+                res.send("Register error");
+              } else {
+                res.send("User created");
+              }
+            }
+          );
+        }
       }
     }
-  });
+  );
 });
 
 app.listen(port, function() {
