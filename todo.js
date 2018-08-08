@@ -19,8 +19,8 @@ var config = {
 var pool = new Pool(config);
 
 todo.post("/list", (req, res) => {
-  var id = req.body.username;
-  pool.query("select * from list where username=($1)", [id], (err, result) => {
+  var email = req.body.email;
+  pool.query("select * from list where email=($1)", [email], (err, result) => {
     if (err) {
       res.send("Select " + err.toString());
     } else if (result.rows.length == 0) {
@@ -32,11 +32,10 @@ todo.post("/list", (req, res) => {
 });
 
 todo.post("/add", (req, res) => {
-  var { username, title, desc } = req.body;
-  var time = Date.now();
+  var { email, title, desc } = req.body;
   pool.query(
-    "insert into list values($1,$2,$3,$4,$5,$6)",
-    [username, title, desc, 0, 0, time],
+    "insert into list (email,title,description,upvote,downvote) values($1,$2,$3,$4,$5,$6)",
+    [email, title, desc, 0, 0],
     (err, result) => {
       if (err) {
         res.send("Insert " + err.toString());
@@ -48,43 +47,28 @@ todo.post("/add", (req, res) => {
 });
 
 todo.put("/edit", (req, res) => {
-  var { username, title, desc, upvote, downvote } = req.body;
+  var { id, upvote, downvote } = req.body;
   pool.query(
-    "select * from list where username=($1) and title=($2)",
-    [username, title],
+    "update list set upvote=($2), downvote=($3) where id=($1)",
+    [id, upvote, downvote],
     (err, result) => {
       if (err) {
-        res.send("Select " + err.toString());
+        res.send("Updation err" + err);
       } else {
-        if (result.rows.length == 0) {
-          res.send("No records found");
-        } else {
-          pool.query(
-            "update list set upvote=($3), downvote=($4) where username=($1) and title=($2)",
-            [username, title, upvote, downvote],
-            (err, result) => {
-              if (err) {
-                res.send("Updation err" + err);
-              } else {
-                res.send(result.toString());
-              }
-            }
-          );
-        }
+        res.send(result.toString());
       }
     }
   );
 });
 
 todo.post("/delete", (req, res) => {
-  var { username, title } = req.body;
-  console.log(username + " " + title);
+  var { id } = req.body;
   pool.query(
-    "delete from list where username=$1 and title=$2",
-    [username, title],
+    "delete from list where id=($1)",
+    [id],
     (err, result) => {
       if (err) {
-        res.send("Select " + err.toString());
+        res.send("delete " + err.toString());
       } else {
         res.send("success");
       }
