@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Do or Try</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="title_activity_login">Sign up</string>
+
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="successes">Successes</string>
+    <string name="failures">Failures</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_short">Password</string>
+    <string name="action_sign_in">Sign up</string>
+    <string name="action_sign_in_underline"> <u>Sign up</u> </string>
+    <string name="action_log_in">Log in</string>
+    <string name="add">Add new</string>
+    <string name="do_or_try">Do or Try</string>
+    <string name="cancel">Cancel</string>
+    <string name="OK">OK</string>
+    <string name="sign_out">Log Out</string>
+    <string name="new_user">New User?</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="action_log_in_underline"><u>Log in</u></string>
+</resources>
