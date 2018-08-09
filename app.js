@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 8080;
-const Pool = require("pg").Pool;
+const { Pool } = require("pg").Pool;
 const crypto = require("crypto");
 
 const app = express();
@@ -9,10 +9,10 @@ const app = express();
 console.log(process.env.DATABASE_URL);
 
 
-var pool = new Pool(new Pool({
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true
-}));
+})
 
 //Hashing the password
 function hash(input, salt){
