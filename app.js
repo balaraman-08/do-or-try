@@ -6,6 +6,9 @@ const crypto = require("crypto");
 
 const app = express();
 
+console.log(process.env.DATABASE_URL);
+
+
 var pool = new Pool(new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: true
