@@ -6,15 +6,10 @@ const crypto = require("crypto");
 
 const app = express();
 
-var config = {
-  user: "pxyelcidwntupx",
-  database: "dd9evum7thmpu0",
-  host: "ec2-54-225-76-201.compute-1.amazonaws.com",
-  port: "5432",
-  password: "ddb6afe9f49508b09c3e54ab8b48d553445cc13be65d6c4c5ea0b83ad29ce5d4"
-};
-
-var pool = new Pool(config);
+var pool = new Pool(new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+}));
 
 //Hashing the password
 function hash(input, salt){
