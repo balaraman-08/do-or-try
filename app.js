@@ -39,7 +39,7 @@ app.post("/login", (req, res) => {
     [email],
     (err, result) => {
       if (err) {
-        console.log("Login " + err.toString);
+        console.log("Login " + err.toString());
         res.send("Something went wrong. Try again later");
       } else {
         if (result.rows.length != 0) {
