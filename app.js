@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 8080;
-const { Pool } = require("pg").Pool;
+const Pool = require("pg");
 const crypto = require("crypto");
 
 const app = express();
